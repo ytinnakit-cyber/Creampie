@@ -1,0 +1,94 @@
+body {
+    margin: 0;
+    font-family: 'Baloo 2', cursive;
+    background: linear-gradient(180deg, #ff9ec4, #ffc8de);
+    color: #fff0f5;
+}
+
+header {
+    background: linear-gradient(90deg, #ff4f8b, #ff94c2);
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    background-image: url('assets/food-text.png'); /* เปลี่ยนเป็นลิงก์ใน assets */
+    background-size: cover;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 2px 2px 0 #ff69b4, 4px 4px 0 #ff1493;
+    animation: foodScroll 10s linear infinite;
+}
+
+@keyframes foodScroll {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+.menu-btn {
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.side-menu {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    background: #ff94c2;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    box-shadow: -4px 0 10px rgba(0,0,0,0.3);
+}
+
+.side-menu a {
+    padding: 12px;
+    display: block;
+    color: #fff8dc;
+    text-decoration: none;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.movie {
+    background: rgba(255, 192, 203, 0.9);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(255,105,180,0.7);
+    border: 5px solid transparent;
+    border-image: url('assets/piggy-border.png') 30 round; /* กรอบหมู */
+    position: relative;
+}
+
+.movie::before {
+    content: "🐷🍔🍟";
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: bounce 2s infinite ease-in-out;
+}
+
+@keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-5px); }
+}
+
+iframe {
+    width: 100%;
+    height: 200px;
+    border: none;
+}
