@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>หมูเเตก Gallery</title>
+<title>หมูเเตก</title>
 <style>
     body {
         margin: 0;
@@ -20,7 +20,7 @@
     }
     .gallery {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
         gap: 15px;
         padding: 15px;
     }
@@ -28,48 +28,52 @@
         background: #2a2a2a;
         border-radius: 5px;
         overflow: hidden;
-        cursor: pointer;
-        transition: transform 0.2s;
         text-align: center;
+        padding: 10px;
     }
-    .movie:hover { transform: scale(1.05); }
     iframe {
         width: 100%;
-        height: 480px;
+        height: 200px;
         border: none;
     }
 </style>
 </head>
 <body>
 
-<header>หมูเเตก Gallery</header>
+<header>หมูเเตก</header>
 <div id="gallery" class="gallery">กำลังโหลด...</div>
 
 <script>
-const API_KEY = "AIzaSyDqTGiDyHi-UbpQ0AIh6k4V1AKigqvVzv0"; // <<== แทนด้วย API Key ของคุณ
-const FOLDER_ID = "Folder ID = 1xjLLQqT-lVklVoTdgRU6-yOyUY-Y3jCP"; // <<== แทนด้วย Folder ID ของคุณ
+const API_KEY = "AIzaSyDqTGiDyHi-UbpQ0AIh6k4V1AKigqvVzv0"; // ใส่ API Key ของคุณ
+const FOLDER_ID = "1xjLLQqT-lVklVoTdgRU6-yOyUY-Y3jCP"; // ใส่ Folder ID ของคุณ
 
 async function loadVideos() {
-    const res = await fetch(`https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}`);
-    const data = await res.json();
-    const gallery = document.getElementById("gallery");
-    gallery.innerHTML = "";
+    try {
+        const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents+and+mimeType+contains+'video'&key=${API_KEY}&fields=files(id,name,mimeType)`;
+        const res = await fetch(url);
+        const data = await res.json();
+        
+        const gallery = document.getElementById("gallery");
+        gallery.innerHTML = "";
 
-    if (!data.files || data.files.length === 0) {
-        gallery.innerHTML = "<p>ไม่มีวิดีโอในโฟลเดอร์</p>";
-        return;
+        if (!data.files || data.files.length === 0) {
+            gallery.innerHTML = "<p>ไม่มีวิดีโอในโฟลเดอร์หรือสิทธิ์แชร์ไม่ถูกต้อง</p>";
+            return;
+        }
+
+        data.files.forEach(file => {
+            const videoId = file.id;
+            gallery.innerHTML += `
+                <div class="movie">
+                    <iframe src="https://drive.google.com/file/d/${videoId}/preview" allowfullscreen></iframe>
+                    <div>${file.name}</div>
+                </div>
+            `;
+        });
+    } catch (err) {
+        document.getElementById("gallery").innerHTML = "<p>เกิดข้อผิดพลาดในการโหลดวิดีโอ</p>";
+        console.error(err);
     }
-
-    data.files.forEach(file => {
-        const videoId = file.id;
-        const videoFrame = `
-            <div class="movie">
-                <iframe src="https://drive.google.com/file/d/${videoId}/preview" allowfullscreen></iframe>
-                <div>${file.name}</div>
-            </div>
-        `;
-        gallery.innerHTML += videoFrame;
-    });
 }
 
 loadVideos();
