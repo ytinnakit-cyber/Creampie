@@ -3,201 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐷 Moo Oan Story</title>
+<title>🐷 Piggy Video Gallery</title>
 
 <!-- ฟอนต์น่ารัก -->
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
 
-<style>
-    body {
-        margin: 0;
-        font-family: 'Baloo 2', cursive;
-        background: url('https://ibb.co/dsS4v4Mz') no-repeat center center fixed;
-        background-size: cover;
-        color: #fff0f5;
-        overflow-x: hidden;
-    }
-
-    header {
-        background: linear-gradient(90deg, #ff4f8b, #ff94c2);
-        padding: 15px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        z-index: 1000;
-        position: relative;
-    }
-
-    .title {
-    font-size: 1.8rem;
-    font-weight: bold;
-    text-shadow: 2px 2px 0 #ff69b4, 
-                 4px 4px 0 #ff1493;
-    
-    /* ลายอาหารฟาสต์ฟู้ด */
-    background-image: url('https://i.ibb.co/pRw0FYf/fastfood-text-bg.png');
-    background-size: 200%;   /* ขยายภาพให้เคลื่อนที่ได้ */
-    background-position: 0% 50%;
-    
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    
-    /* ทำ Animation เคลื่อนไหว */
-    animation: foodScroll 10s linear infinite;
-}
-
-/* Animation เลื่อนลายอาหาร */
-@keyframes foodScroll {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 100% 50%; }
-}
-
-    .menu-btn {
-        cursor: pointer;
-        font-size: 28px;
-        color: #fff8dc;
-        z-index: 1001;
-        position: relative;
-    }
-
-    .side-menu {
-        height: 100%;
-        width: 0;
-        position: fixed;
-        top: 0;
-        right: 0;
-        background: linear-gradient(180deg, #ff69b4, #ffb6c1);
-        overflow-x: hidden;
-        transition: 0.5s;
-        padding-top: 60px;
-        z-index: 2000; /* ให้อยู่เหนือวิดีโอ */
-        box-shadow: -4px 0 10px rgba(0,0,0,0.3);
-    }
-
-    .side-menu a {
-        padding: 12px 24px;
-        text-decoration: none;
-        font-size: 20px;
-        color: #fff8dc;
-        display: block;
-        transition: 0.3s;
-        text-shadow: 1px 1px 0 #ff1493;
-    }
-
-    .side-menu a:hover {
-        background: rgba(255,255,255,0.2);
-    }
-
-    .gallery {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-        gap: 15px;
-        padding: 15px;
-        margin-top: 10px;
-    }
-
-    .movie {
-        background: rgba(255,182,193,0.8);
-        border-radius: 15px;
-        overflow: hidden;
-        text-align: center;
-        padding: 10px;
-        position: relative;
-        box-shadow: 0 4px 8px rgba(255,105,180,0.5);
-    }
-
-    iframe {
-        width: 100%;
-        height: 200px;
-        border: none;
-        border-radius: 10px;
-    }
-
-    .pig-effect {
-        position: absolute;
-        width: 60px;
-        height: 60px;
-        background: url('https://ibb.co/1j2sXj3') no-repeat center;
-        background-size: contain;
-        pointer-events: none;
-        animation: pig-pop 1s ease-out forwards;
-        z-index: 3000;
-    }
-
-    @keyframes pig-pop {
-        0% { transform: scale(0.5) translateY(0); opacity: 1; }
-        50% { transform: scale(1.2) translateY(-50px); opacity: 1; }
-        100% { transform: scale(0.5) translateY(-100px); opacity: 0; }
-    }
-</style>
+<!-- CSS -->
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
 
+<body>
 <header>
-    <div class="title">🐷 สตออู๊ด</div>
+    <div class="title">🐷 Piggy Video Gallery</div>
     <div class="menu-btn" onclick="openMenu()">☰</div>
 </header>
 
+<!-- เมนูสามขีด -->
 <div id="sideMenu" class="side-menu">
     <a href="javascript:void(0)" onclick="closeMenu()">✖ ปิด</a>
-    <a href="#">🎥 วิดีอู๊ด</a>
+    <a href="#">🐽 วิดีอู๊ด</a>
 </div>
 
-<div id="gallery" class="gallery">รอก่อสิไอหมู!!</div>
+<!-- แกลเลอรี่วิดีโอ -->
+<div id="gallery" class="gallery">รอก่อนสิหมู...</div>
 
-<script>
-const API_KEY = "AIzaSyDqTGiDyHi-UbpQ0AIh6k4V1AKigqvVzv0"; // ใส่ API Key ของคุณ
-const FOLDER_ID = "1xjLLQqT-lVklVoTdgRU6-yOyUY-Y3jCP"; // ใส่ Folder ID ของคุณ
-
-async function loadVideos() {
-    try {
-        const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents+and+mimeType+contains+'video'&key=${API_KEY}&fields=files(id,name,mimeType)`;
-        const res = await fetch(url);
-        const data = await res.json();
-        
-        const gallery = document.getElementById("gallery");
-        gallery.innerHTML = "";
-
-        if (!data.files || data.files.length === 0) {
-            gallery.innerHTML = "<p>ไม่มีวิดีโอในโฟลเดอร์หรือสิทธิ์แชร์ไม่ถูกต้อง</p>";
-            return;
-        }
-
-        data.files.forEach(file => {
-            const videoId = file.id;
-            gallery.innerHTML += `
-                <div class="movie">
-                    <iframe src="https://drive.google.com/file/d/${videoId}/preview" allowfullscreen></iframe>
-                    <div>${file.name}</div>
-                </div>
-            `;
-        });
-    } catch (err) {
-        document.getElementById("gallery").innerHTML = "<p>เกิดข้อผิดพลาดในการโหลดวิดีโอ</p>";
-        console.error(err);
-    }
-}
-
-function openMenu() {
-    document.getElementById("sideMenu").style.width = "220px";
-}
-function closeMenu() {
-    document.getElementById("sideMenu").style.width = "0";
-}
-
-document.addEventListener("click", function(e) {
-    const pig = document.createElement("div");
-    pig.className = "pig-effect";
-    pig.style.left = (e.pageX - 30) + "px";
-    pig.style.top = (e.pageY - 30) + "px";
-    document.body.appendChild(pig);
-    setTimeout(() => pig.remove(), 1000);
-});
-
-loadVideos();
-</script>
-
+<!-- JS -->
+<script src="script.js"></script>
 </body>
 </html>
