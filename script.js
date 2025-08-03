@@ -1,9 +1,9 @@
-const API_KEY = "YOUR_API_KEY"; 
-const FOLDER_ID = "YOUR_FOLDER_ID"; 
+const API_KEY = "AIzaSyDqTGiDyHi-UbpQ0AIh6k4V1AKigqvVzv0"; 
+const FOLDER_ID = "1xjLLQqT-lVklVoTdgRU6-yOyUY-Y3jCP"; 
 
 async function loadVideos() {
     const gallery = document.getElementById("gallery");
-    gallery.innerHTML = "รอก่อนนะหมู";
+    gallery.innerHTML = "รอก่อนสิหมู...";
 
     try {
         const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents+and+mimeType+contains+'video'&key=${API_KEY}&fields=files(id,name)`;
