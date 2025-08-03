@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Creampie Movie Gallery</title>
+<title>หมูเเตก Gallery</title>
 <style>
     body {
         margin: 0;
@@ -42,12 +42,12 @@
 </head>
 <body>
 
-<header>Creampie Movie Gallery</header>
+<header>หมูเเตก Gallery</header>
 <div id="gallery" class="gallery">กำลังโหลด...</div>
 
 <script>
 const API_KEY = "AIzaSyDqTGiDyHi-UbpQ0AIh6k4V1AKigqvVzv0"; // <<== แทนด้วย API Key ของคุณ
-const FOLDER_ID = "https://drive.google.com/drive/folders/1xjLLQqT-lVklVoTdgRU6-yOyUY-Y3jCP?usp=sharing"; // <<== แทนด้วย Folder ID ของคุณ
+const FOLDER_ID = "https://drive.google.com/drive/folders/1xjLLQqT-lVklVoTdgRU6-yOyUY-Y3jCP?usp"; // <<== แทนด้วย Folder ID ของคุณ
 
 async function loadVideos() {
     const res = await fetch(`https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}`);
