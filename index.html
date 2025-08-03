@@ -3,45 +3,103 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>หมูเเตก</title>
+<title>MOO OAN STORY</title>
 <style>
     body {
         margin: 0;
-        background: #1c1c1c;
-        font-family: Arial, sans-serif;
+        font-family: 'Arial', sans-serif;
+        background: url('https://i.ibb.co/x8T6nHD/fat-pig-bg.jpg') no-repeat center center fixed;
+        background-size: cover;
         color: white;
+        overflow-x: hidden;
     }
     header {
-        background: #111;
+        background: rgba(0,0,0,0.6);
         padding: 15px;
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .title {
         font-size: 1.5rem;
         font-weight: bold;
+    }
+    .menu-btn {
+        cursor: pointer;
+        font-size: 24px;
+    }
+    .side-menu {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        top: 0;
+        right: 0;
+        background-color: rgba(0,0,0,0.9);
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+    }
+    .side-menu a {
+        padding: 10px 20px;
+        text-decoration: none;
+        font-size: 18px;
+        color: white;
+        display: block;
+        transition: 0.3s;
+    }
+    .side-menu a:hover {
+        background: rgba(255,255,255,0.1);
     }
     .gallery {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
         gap: 15px;
         padding: 15px;
+        margin-top: 10px;
     }
     .movie {
-        background: #2a2a2a;
-        border-radius: 5px;
+        background: rgba(0,0,0,0.5);
+        border-radius: 10px;
         overflow: hidden;
         text-align: center;
         padding: 10px;
+        position: relative;
     }
     iframe {
         width: 100%;
         height: 200px;
         border: none;
+        border-radius: 5px;
+    }
+    .pig-effect {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        background: url('https://i.ibb.co/p3w0LMr/fat-pig-icon.png') no-repeat center;
+        background-size: contain;
+        pointer-events: none;
+        animation: pig-pop 1s ease-out forwards;
+    }
+    @keyframes pig-pop {
+        0% { transform: scale(0.5) translateY(0); opacity: 1; }
+        50% { transform: scale(1.2) translateY(-50px); opacity: 1; }
+        100% { transform: scale(0.5) translateY(-100px); opacity: 0; }
     }
 </style>
 </head>
 <body>
 
-<header>หมูเเตก</header>
-<div id="gallery" class="gallery">กำลังโหลด...</div>
+<header>
+    <div class="title">🐷 Moo oan story</div>
+    <div class="menu-btn" onclick="openMenu()">☰</div>
+</header>
+
+<div id="sideMenu" class="side-menu">
+    <a href="javascript:void(0)" onclick="closeMenu()">✖ ปิด</a>
+    <a href="#">🎥 วิดีอู๊ด</a>
+</div>
+
+<div id="gallery" class="gallery">รอก่อนสิไออ้วน...</div>
 
 <script>
 const API_KEY = "AIzaSyDqTGiDyHi-UbpQ0AIh6k4V1AKigqvVzv0"; // ใส่ API Key ของคุณ
@@ -75,6 +133,22 @@ async function loadVideos() {
         console.error(err);
     }
 }
+
+function openMenu() {
+    document.getElementById("sideMenu").style.width = "200px";
+}
+function closeMenu() {
+    document.getElementById("sideMenu").style.width = "0";
+}
+
+document.addEventListener("click", function(e) {
+    const pig = document.createElement("div");
+    pig.className = "pig-effect";
+    pig.style.left = (e.pageX - 30) + "px";
+    pig.style.top = (e.pageY - 30) + "px";
+    document.body.appendChild(pig);
+    setTimeout(() => pig.remove(), 1000);
+});
 
 loadVideos();
 </script>
